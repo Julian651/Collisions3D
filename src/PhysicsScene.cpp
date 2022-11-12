@@ -5,7 +5,7 @@ PhysicsScene::PhysicsScene() : Scene(50, 50, 50, 2)
 {
    cam.Move(glm::vec3(0.f, 0.f, 100.f));
    cam.LookAt(glm::vec3(0.f, 0.f, -1.f));
-   ReBindFromBlender(2, "resources\\monke.obj");
+   ReBindFromBlender(2, "resources\\sphere.obj");
 }
 
 void PhysicsScene::Update(GLfloat inTimeElapsed)

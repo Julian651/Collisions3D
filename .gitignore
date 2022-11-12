@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+*.sln
+/Collisions3D.vcxproj.user
+/Collisions3D.vcxproj.filters
+/Collisions3D.vcxproj
+/x64/Debug
