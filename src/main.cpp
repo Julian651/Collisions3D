@@ -1,12 +1,10 @@
-#include <GL/glad.h>
-#include <GL/glfw3.h>
-#include "PhysicsScene.h"
+#include <TestScene.h>
 #include <iostream>
-#include <chrono>
+#include <GL/glfw3.h>
 
-// settings
-unsigned int SCR_WIDTH = 1200;
-unsigned int SCR_HEIGHT = 720;
+#define SCR_WIDTH 1200
+#define SCR_HEIGHT 720
+
 
 int main()
 {
@@ -23,7 +21,7 @@ int main()
 
    // glfw window creation
    // --------------------
-   GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+   GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Scenes", NULL, NULL);
    if (window == NULL)
    {
       std::cerr << "Failed to create GLFW window" << std::endl;
@@ -31,10 +29,11 @@ int main()
       return -1;
    }
 
+   glfwSetWindowPos(window, 500, 100);
    glfwMakeContextCurrent(window);
-   glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-   if (glfwRawMouseMotionSupported())
-      glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+   //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+   //if (glfwRawMouseMotionSupported())
+   //   glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 
    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
    {
@@ -42,45 +41,37 @@ int main()
       return -1;
    }
 
-   GLuint vertexShader = compileShader("resources\\myshader.vert", eShaderType::VERTEX);
-   GLuint fragmentShader = compileShader("resources\\myfragment.frag", eShaderType::FRAGMENT);
-   ShaderProgram program;
-   program.attach(vertexShader, eShaderType::VERTEX);
-   program.attach(fragmentShader, eShaderType::FRAGMENT);
-   program.link();
-   glDeleteShader(vertexShader);
-   glDeleteShader(fragmentShader);
+   ShaderProgram prog;
+   prog.Attach(compileShader("resources\\myshader.vert", eShaderType::VERTEX),
+      compileShader("resources\\myfragment.frag", eShaderType::FRAGMENT));
+   prog.Link();
 
-   PhysicsScene scene1;
-   BallObject obj(glm::vec3(-3.f, 0.f, 0.f));
-   BallObject obj2(glm::vec3(3.f, 0.f, 0.f));
-   obj2.m_velocity = glm::vec3(25.f, -3.f, -12.5f);
-   obj.m_velocity = glm::vec3(-25.f, 3.f, 12.5f);
-   scene1.AddBall(obj, program);
-   scene1.AddBall(obj2, program);
-   scene1.EnableUpdates();
+   Camera cam(glm::vec3(0.f, 0.f, 100.f));
 
-   // uncomment this call to draw in wireframe polygons.
+   TestScene::Initialize();
+   TestScene::Initialize();
+   TestScene2::Initialize();
+
+   TestScene sc(glm::vec3(0.f));
+   TestScene2 sc2(glm::vec3(50.f, 0.f, 0.f));
+
    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
    glEnable(GL_DEPTH_TEST);
    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-
-   SceneManager::SetWindow(window);
-   SceneManager::AddScene(scene1);
-   SceneManager::SetScene(scene1.ID());
-   //glfwSetTime(0.0);
    while (!glfwWindowShouldClose(window))
    {
       glfwSetTime(0.0);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-      SceneManager::Render(program, 0.0006f);
+      sc.Render(cam, prog);
+      sc2.Render(cam, prog);
 
       glfwSwapBuffers(window);
       glfwPollEvents();
-      std::cout << "fps: " << 1.f / glfwGetTime() << std::endl;
    }
+
+   TestScene::Destroy();
+   TestScene2::Destroy();
 
    glfwTerminate();
    return 0;
