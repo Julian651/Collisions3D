@@ -19,7 +19,7 @@ private:
    static void _init()
    {
       fprintf(stderr, "test scene 1 init\n");
-      GenBindFromBlender("resources\\monke.obj");
+      GenBindFromBlender("resources\\sphere.obj");
       AddBufferObj();
    }
    static void _destroy()

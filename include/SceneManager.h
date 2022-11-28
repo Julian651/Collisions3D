@@ -1,5 +1,6 @@
 #pragma once
 #include <RenderUtilities.h>
+#include <GL/glfw3.h>
 
 template <class T>
 class SceneManager

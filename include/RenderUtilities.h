@@ -4,7 +4,6 @@
 #include <glm/ext/matrix_double4x4.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <GL/glad.h>
-#include <GL/glfw3.h>
 #include <vector>
 #include <fstream>
 
