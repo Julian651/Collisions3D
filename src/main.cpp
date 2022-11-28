@@ -1,6 +1,7 @@
 #include <TestScene.h>
 #include <iostream>
 #include <GL/glfw3.h>
+#include <PhysicsManager.h>
 
 #define SCR_WIDTH 1200
 #define SCR_HEIGHT 720
@@ -48,12 +49,8 @@ int main()
 
    Camera cam(glm::vec3(0.f, 0.f, 100.f));
 
-   TestScene::Initialize();
-   TestScene::Initialize();
-   TestScene2::Initialize();
-
-   TestScene sc(glm::vec3(0.f));
-   TestScene2 sc2(glm::vec3(50.f, 0.f, 0.f));
+   PhysicsManager::Initialize();
+   PhysicsManager::SetWindow(window);
 
    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
    glEnable(GL_DEPTH_TEST);
@@ -63,15 +60,12 @@ int main()
       glfwSetTime(0.0);
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-      sc.Render(cam, prog);
-      sc2.Render(cam, prog);
+      PhysicsManager::Render(prog);
+      PhysicsManager::Update(0.0006f);
 
       glfwSwapBuffers(window);
       glfwPollEvents();
    }
-
-   TestScene::Destroy();
-   TestScene2::Destroy();
 
    glfwTerminate();
    return 0;
