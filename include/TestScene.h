@@ -152,14 +152,17 @@ private:
    }
 
 protected:
-   Object* obj;
 
 public:
 
    HexaScene(glm::vec3 pos) : Scene(pos)
    {
    }
-   ~HexaScene() { fprintf(stderr, "delete scene2\n"); delete obj; }
+
+   ~HexaScene()
+   {
+      fprintf(stderr, "delete scene2\n");
+   }
 
    void AddHexa(glm::vec3 pos)
    {

@@ -67,6 +67,7 @@ int main()
       glfwPollEvents();
    }
 
+   PhysicsManager::Destroy();
    glfwTerminate();
    return 0;
 }

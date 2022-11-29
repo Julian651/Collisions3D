@@ -18,6 +18,7 @@ void PhysicsManager::_initalize()
 void PhysicsManager::_destroy()
 {
    SphereScene::Destroy();
+   HexaScene::Destroy();
 }
 
 void PhysicsManager::_render(ShaderProgram& shaders)
@@ -93,8 +94,8 @@ void PhysicsManager::_onMouseClick(int button, int action, int mods, double mous
    }
    else if (button == GLFW_MOUSE_BUTTON_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT))
    {
-      float x = (2.f * mouse_x) / m_screenWidth - 1.f;
-      float y = 1.f - (2.f * mouse_y) / m_screenHeight;
+      float x = (2.f * static_cast<float>(mouse_x)) / m_screenWidth - 1.f;
+      float y = 1.f - (2.f * static_cast<float>(mouse_y)) / m_screenHeight;
       float z = 1.f;
       glm::vec3 ray_nds = glm::vec3(x, y, z);
 
